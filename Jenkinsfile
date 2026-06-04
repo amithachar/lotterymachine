@@ -28,13 +28,20 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
-                    steps {
-                        sh '''
-                            python3 -m pip install --upgrade pip
-                            pip3 install -r requirements.txt
-                        '''
-                    }
-                }
+            steps {
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y python3-venv python3-pip
+                    
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                    pip install pytest
+                '''
+            }
+        }
 
         stage('Run Tests') {
             steps {
