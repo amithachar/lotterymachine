@@ -30,13 +30,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y python3-venv python3-pip
-                    
                     python3 -m venv venv
                     . venv/bin/activate
-                    
-                    pip install --upgrade pip
+                    python -m pip install --upgrade pip
                     pip install -r requirements.txt
                     pip install pytest
                 '''
