@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = "YOUR_GCP_PROJECT"
-        REGION     = "asia-south1"
+        PROJECT_ID = "durable-catbird-450018-j4"
+        REGION     = "us-central1-a	"
         REPOSITORY = "lottery"
         IMAGE_NAME = "lottery-machine"
         IMAGE_TAG  = "${BUILD_NUMBER}"
