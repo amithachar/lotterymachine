@@ -27,17 +27,9 @@ pipeline {
                 '''
             }
         }
-
         stage('Install Dependencies') {
                     steps {
                         sh '''
-                            # Download the official pip bootstrapper if pip is missing
-                            if ! command -v pip3 &> /dev/null; then
-                                echo "pip3 not found, installing..."
-                                curl -sS https://bootstrap.pypa.io/get-pip.py | python3
-                            fi
-
-                            # Upgrade pip and install packages
                             python3 -m pip install --upgrade pip
                             pip3 install -r requirements.txt
                         '''
