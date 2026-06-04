@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: lottery
+
+spec:
+
+ replicas: 2
+
+ selector:
+  matchLabels:
+    app: lottery
+
+ template:
+
+  metadata:
+    labels:
+      app: lottery
+
+  spec:
+
+   containers:
+
+   - name: lottery
+
+     image:
+       IMAGE_URL
+
+     ports:
+
+     - containerPort: 5000
