@@ -7,7 +7,7 @@ pipeline {
         REPOSITORY = "lottery"
         IMAGE_NAME = "lottery-machine"
         IMAGE_TAG  = "${BUILD_NUMBER}"
-        FULL_IMAGE = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+        FULL_IMAGE = "${REGION}docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
         CLUSTER    = "lottery-cluster"
     }
 
