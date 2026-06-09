@@ -6,11 +6,9 @@ pipeline {
         REGION = "us-central1"
         REPOSITORY = "lottery"
         IMAGE_NAME = "lottery-machine"
-        IMAGE_TAG = "${BUILD_NUMBER}"
-
+        IMAGE_TAG  = "${BUILD_NUMBER}"
         FULL_IMAGE = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
-
-        CLUSTER = "lottery-cluster"
+        CLUSTER    = "lottery-cluster"
     }
 
     stages {
