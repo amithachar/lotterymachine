@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PROJECT_ID      = "durable-catbird-450018-j4"
-        ZONE            = "us-central1-a"
+        REGION           = "asia-south1"
         REGISTRY_REGION = "us-central1"
         REPOSITORY      = "lottery"
         IMAGE_NAME      = "lottery-machine"
@@ -114,7 +114,7 @@ pipeline {
                         
                         gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                         gcloud config set project $PROJECT_ID
-                        gcloud container clusters get-credentials $CLUSTER --zone $ZONE
+                        gcloud container clusters get-credentials $CLUSTER --region $REGION
                         
                         kubectl apply -f lotterygitops/lotterygame/deployment.yaml
                         kubectl apply -f lotterygitops/lotterygame/service.yaml
