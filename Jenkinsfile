@@ -59,7 +59,7 @@ pipeline {
                     sh '''
                         gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                         gcloud config set project $PROJECT_ID
-                        gcloud auth configure-docker ${REGISTRY_REGION}-docker.pkg.dev
+                        gcloud auth configure-docker ${REGISTRY_REGION}-docker.pkg.dev --quiet
                         docker push $FULL_IMAGE
                     '''
                 }
