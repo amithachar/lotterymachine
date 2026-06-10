@@ -74,9 +74,9 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                        rm -rf lottery-gitops || true
+                        rm -rf lotterygitops || true
                         git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/amithachar/lotterygitops.git
-                        cd lottery-gitops
+                        cd lotterygitops
                         
                         git config user.email "jenkins@ci.com"
                         git config user.name "jenkins"
@@ -107,8 +107,8 @@ pipeline {
                         gcloud config set project $PROJECT_ID
                         gcloud container clusters get-credentials $CLUSTER --zone $ZONE
                         
-                        kubectl apply -f lottery-gitops/deployment.yaml
-                        kubectl apply -f lottery-gitops/service.yaml
+                        kubectl apply -f lotterygitops/deployment.yaml
+                        kubectl apply -f lotterygitops/service.yaml
                         kubectl rollout status deployment/lottery-deployment
                     '''
                 }
