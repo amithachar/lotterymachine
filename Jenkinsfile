@@ -64,26 +64,72 @@ pipeline {
             }
         }
 
+       stage('Update GitOps Deployment') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'github-creds',
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        rm -rf lottery-gitops || true
+                        git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/amithachar/lotterygitops.git
+                        cd lottery-gitops
+                        
+                        git config user.email "jenkins@ci.com"
+                        git config user.name "jenkins"
+                        
+                        sed -i "s|image: .*|image: ${FULL_IMAGE}|g" deployment.yaml
+                        cat deployment.yaml
+                        
+                        if ! git diff --quiet; then
+                            git add deployment.yaml
+                            git commit -m "Update lottery image ${IMAGE_TAG}"
+                            git push origin main
+                        else
+                            echo "No changes detected"
+                        fi
+                    '''
+                }
+            }
+        }
+
         stage('Deploy GKE') {
             steps {
-                sh '''
-                    gcloud container clusters get-credentials $CLUSTER --region $REGION
-                    kubectl set image deployment/lottery-deployment lottery=$FULL_IMAGE
-                    kubectl rollout status deployment/lottery-deployment
-                '''
+                withCredentials([
+                    file(credentialsId: 'gcp-service-account', variable: 'GOOGLE_KEY')
+                ]) {
+                    sh '''
+                        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+                        gcloud auth activate-service-account --key-file=$GOOGLE_KEY
+                        gcloud config set project $PROJECT_ID
+                        gcloud container clusters get-credentials $CLUSTER --zone $ZONE
+                        
+                        kubectl apply -f lottery-gitops/deployment.yaml
+                        kubectl apply -f lottery-gitops/service.yaml
+                        kubectl rollout status deployment/lottery-deployment
+                    '''
+                }
             }
         }
     }
 
     post {
+        always {
+            archiveArtifacts artifacts: '**/*.xml', allowEmptyArchive: true
+            sh '''
+                docker logout || true
+                docker rmi $FULL_IMAGE || true
+            '''
+            cleanWs()
+        }
         success {
-            echo "Deployment Successful"
+            echo 'Lottery deployed successfully'
         }
         failure {
-            echo "Pipeline Failed"
-        }
-        always {
-            cleanWs()
+            echo 'Pipeline failed'
         }
     }
 }
