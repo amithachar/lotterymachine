@@ -2,13 +2,14 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = "durable-catbird-450018-j4"
-        REGION     = "us-central1-a"
-        REPOSITORY = "lottery"
-        IMAGE_NAME = "lottery-machine"
-        IMAGE_TAG  = "${BUILD_NUMBER}"
-        FULL_IMAGE = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
-        CLUSTER    = "lottery-cluster"
+        PROJECT_ID      = "durable-catbird-450018-j4"
+        ZONE            = "us-central1-a"
+        REGISTRY_REGION = "us-central1"
+        REPOSITORY      = "lottery"
+        IMAGE_NAME      = "lottery-machine"
+        IMAGE_TAG       = "${BUILD_NUMBER}"
+        FULL_IMAGE      = "${REGISTRY_REGION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+        CLUSTER         = "lottery-cluster"
     }
 
     stages {
@@ -27,6 +28,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Install Dependencies') {
             steps {
                 sh '''
@@ -41,7 +43,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'pytest tests/ -v || true'
+                sh '. venv/bin/activate && pytest tests/ -v || true'
             }
         }
 
@@ -57,14 +59,14 @@ pipeline {
                     sh '''
                         gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                         gcloud config set project $PROJECT_ID
-                        gcloud auth configure-docker ${REGION}-docker.pkg.dev
+                        gcloud auth configure-docker ${REGISTRY_REGION}-docker.pkg.dev
                         docker push $FULL_IMAGE
                     '''
                 }
             }
         }
 
-       stage('Update GitOps Deployment') {
+        stage('Update GitOps Deployment') {
             steps {
                 withCredentials([
                     usernamePassword(
@@ -122,6 +124,7 @@ pipeline {
                 }
             }
         }
+    } // Closes the stages block properly
 
     post {
         always {
