@@ -75,13 +75,19 @@ pipeline {
                 ]) {
                     sh '''
                         rm -rf lotterygitops || true
+                        
                         git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/amithachar/lotterygitops.git
                         cd lotterygitops
                         
                         git config user.email "jenkins@ci.com"
                         git config user.name "jenkins"
                         
+                        cd lotterygame
+                        pwd
+                        ls -la
+                        
                         sed -i "s|image: .*|image: ${FULL_IMAGE}|g" deployment.yaml
+                        echo "Updated deployment"
                         cat deployment.yaml
                         
                         if ! git diff --quiet; then
@@ -103,18 +109,19 @@ pipeline {
                 ]) {
                     sh '''
                         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+                        
                         gcloud auth activate-service-account --key-file=$GOOGLE_KEY
                         gcloud config set project $PROJECT_ID
                         gcloud container clusters get-credentials $CLUSTER --zone $ZONE
                         
-                        kubectl apply -f lotterygitops/deployment.yaml
-                        kubectl apply -f lotterygitops/service.yaml
+                        kubectl apply -f lotterygitops/lotterygame/deployment.yaml
+                        kubectl apply -f lotterygitops/lotterygame/service.yaml
+                        
                         kubectl rollout status deployment/lottery-deployment
                     '''
                 }
             }
         }
-    }
 
     post {
         always {
