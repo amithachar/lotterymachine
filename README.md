@@ -15,9 +15,9 @@ To install ArgoCD on your GKE cluster and connect it to your lottery-gitops repo
 
 If not already connected:
 
-'
+'''
 gcloud config set project durable-catbird-450018-j4
-'
+
 
 For zonal cluster:
 
