@@ -57,7 +57,7 @@
 │    Access Application    │
 └──────────────────────────┘
 
-<img width="231" height="685" alt="image" src="https://github.com/user-attachments/assets/edc81f03-8320-4d46-b38a-9623468f7eeb" />
+
 
 
 # Gitlab Credentials 
