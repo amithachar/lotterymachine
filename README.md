@@ -1,6 +1,62 @@
 
 # Lottery Rolling Machine Architecture
 
+```text
+┌──────────────────────────┐
+│        Developer         │
+│  Push code → GitHub      │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│         Jenkins          │
+│      (CI Pipeline)       │
+│                          │
+│ 1. Checkout Code         │
+│ 2. Install Dependencies  │
+│ 3. Run Unit Tests        │
+│ 4. Build Docker Image    │
+│ 5. Push Container        │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│ Google Artifact Registry │
+│                          │
+│ lottery-machine:build#   │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│       GitOps Repo        │
+│      (lotterygitops)     │
+│                          │
+│ deployment.yaml          │
+│ image tag updated        │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│      ArgoCD (GitOps)     │
+│   Watches GitOps Repo    │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│    Google Kubernetes     │
+│   Engine (GKE Cluster)   │
+│                          │
+│ Deployment               │
+│ Service                  │
+│ Pods                     │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│          Users           │
+│    Access Application    │
+└──────────────────────────┘
+
 <img width="231" height="685" alt="image" src="https://github.com/user-attachments/assets/edc81f03-8320-4d46-b38a-9623468f7eeb" />
 
 
