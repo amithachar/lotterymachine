@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 
 <title>
+
 3D Lottery Machine
+
 </title>
 
 <link
@@ -18,17 +20,15 @@ href="/static/css/style.css">
 
 <body>
 
-<!-- NEWS TICKER -->
-
 <div id="historyBar">
 
-<div class="history-title">
+<div class="historyTitle">
 
 🏆 RECENT WINNERS
 
 </div>
 
-<div id="ticker">
+<div id="historyTicker">
 
 Waiting for first draw...
 
@@ -46,18 +46,39 @@ Waiting for first draw...
 
 <div id="machine">
 
-<div class="ball"><span>0</span></div>
-<div class="ball"><span>0</span></div>
-<div class="ball"><span>0</span></div>
-<div class="ball"><span>0</span></div>
-<div class="ball"><span>0</span></div>
-<div class="ball"><span>0</span></div>
+<div class="ball">
+<span>0</span>
+</div>
+
+<div class="ball">
+<span>0</span>
+</div>
+
+<div class="ball">
+<span>0</span>
+</div>
+
+<div class="ball">
+<span>0</span>
+</div>
+
+<div class="ball">
+<span>0</span>
+</div>
+
+<div class="ball">
+<span>0</span>
+</div>
 
 </div>
 
 <button
+
 id="startBtn"
-onclick="startRoll()">
+
+onclick="startRoll()"
+
+>
 
 START
 
@@ -71,21 +92,5 @@ src="/static/js/app.js">
 </script>
 
 </body>
-
-<div id="historyBar">
-
-<div class="historyTitle">
-
-🏆 RECENT WINNERS
-
-</div>
-
-<div id="historyTicker">
-
-Waiting for first draw...
-
-</div>
-
-</div>
 
 </html>

@@ -1,169 +1,64 @@
-let history=[]
+from flask import Flask, render_template, jsonify
+import random
 
-async function startRoll(){
+app = Flask(__name__)
 
-const btn=
-document.getElementById(
-"startBtn"
-)
+TOTAL_NUMBERS = 6
+MIN_NUMBER = 0
+MAX_NUMBER = 9
 
-btn.disabled=true
 
-const balls=
-document.querySelectorAll(
-".ball"
-)
+@app.route("/")
+def home():
 
-balls.forEach(
+    return render_template(
+        "index.html"
+    )
 
-ball=>{
 
-ball.classList.add(
-"roll"
-)
+@app.route("/start")
+def start():
 
-}
+    numbers = [
 
-)
+        random.randint(
+            MIN_NUMBER,
+            MAX_NUMBER
+        )
 
-const intervals=[]
+        for _ in range(
+            TOTAL_NUMBERS
+        )
 
-balls.forEach(
+    ]
 
-(
-ball,
-index
+    return jsonify({
 
-)=>{
+        "success": True,
 
-const number=
+        "numbers": numbers
 
-ball.querySelector(
-"span"
-)
+    })
 
-intervals[index]=
 
-setInterval(
+@app.route("/health")
+def health():
 
-()=>{
+    return jsonify({
 
-number.innerHTML=
+        "status": "UP"
 
-Math.floor(
-Math.random()*10
-)
+    })
 
-},
 
-70
+if __name__ == "__main__":
 
-)
+    app.run(
 
-}
+        host="0.0.0.0",
 
-)
+        port=5000,
 
-const response=
+        debug=False
 
-await fetch(
-"/start"
-)
-
-const data=
-
-await response.json()
-
-setTimeout(()=>{
-
-let winner=""
-
-balls.forEach(
-
-(
-ball,
-index
-
-)=>{
-
-setTimeout(()=>{
-
-clearInterval(
-intervals[index]
-)
-
-ball.classList.remove(
-"roll"
-)
-
-let digit=
-
-data.numbers[index]
-
-ball.querySelector(
-"span"
-)
-
-.innerHTML=
-
-digit
-
-winner+=digit
-
-if(
-index===5
-){
-
-btn.disabled=false
-
-addWinner(
-winner
-)
-
-}
-
-},
-
-index*700
-
-)
-
-}
-
-)
-
-},10000)
-
-}
-
-function addWinner(
-
-value
-
-){
-
-history.unshift(
-value
-)
-
-history=
-
-history.slice(
-0,
-10
-)
-
-document
-.getElementById(
-"historyTicker"
-)
-
-.innerHTML=
-
-history.join(
-
-" &nbsp;&nbsp; ★ &nbsp;&nbsp; "
-
-)
-
-}
+    )

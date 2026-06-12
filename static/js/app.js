@@ -3,6 +3,7 @@ let history=[]
 async function startRoll(){
 
 const btn=
+
 document.getElementById(
 "startBtn"
 )
@@ -17,11 +18,13 @@ document.querySelectorAll(
 
 balls.forEach(
 
-b=>
+ball=>{
 
-b.classList.add(
+ball.classList.add(
 "roll"
 )
+
+}
 
 )
 
@@ -55,7 +58,7 @@ Math.random()*10
 
 },
 
-80
+70
 
 )
 
@@ -73,11 +76,9 @@ const data=
 
 await response.json()
 
-setTimeout(
+setTimeout(()=>{
 
-()=>{
-
-let final=""
+let winner=""
 
 balls.forEach(
 
@@ -87,9 +88,7 @@ index
 
 )=>{
 
-setTimeout(
-
-()=>{
+setTimeout(()=>{
 
 clearInterval(
 intervals[index]
@@ -99,17 +98,19 @@ ball.classList.remove(
 "roll"
 )
 
+const value=
+
+data.numbers[index]
+
 ball.querySelector(
 "span"
 )
 
 .innerHTML=
 
-data.numbers[index]
+value
 
-final+=
-
-data.numbers[index]
+winner+=value
 
 if(
 
@@ -119,15 +120,15 @@ index===5
 
 btn.disabled=false
 
-updateHistory(
-final
+saveWinner(
+winner
 )
 
 }
 
 },
 
-index*500
+index*700
 
 )
 
@@ -135,22 +136,18 @@ index*500
 
 )
 
-},
-
-10000
-
-)
+},10000)
 
 }
 
-function updateHistory(
+function saveWinner(
 
-result
+winner
 
 ){
 
 history.unshift(
-result
+winner
 )
 
 history=
@@ -162,14 +159,14 @@ history.slice(
 
 document
 .getElementById(
-"ticker"
+"historyTicker"
 )
 
 .innerHTML=
 
 history.join(
 
-"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+"&nbsp;&nbsp;★&nbsp;&nbsp;"
 
 )
 
