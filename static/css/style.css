@@ -184,6 +184,10 @@ translateX(
 
 text-align:center;
 
+margin-left:260px;
+
+margin-right:260px;
+
 }
 
 h1{
@@ -350,15 +354,17 @@ scale(
 
 position:absolute;
 
-left:15px;
+left:12px;
 
-top:100px;
+top:110px;
 
-width:290px;
+width:250px;
 
-height:700px;
+height:680px;
 
 overflow:auto;
+
+padding:14px;
 
 border-radius:22px;
 
@@ -368,53 +374,45 @@ rgba(
 255,
 255,
 255,
-0.12
+0.10
 );
 
 backdrop-filter:
 
 blur(
-15px
+12px
 );
-
-padding:18px;
 
 box-shadow:
 
-0 15px 35px rgba(
+0 15px 30px rgba(
 0,
 0,
 0,
-0.35
+0.25
 );
 
 }
 
 .panelHeader{
 
-font-size:28px;
+font-size:22px;
 
 color:white;
 
 font-weight:bold;
 
-margin-bottom:18px;
-
 text-align:center;
+
+margin-bottom:14px;
 
 }
 
 .stateRow{
 
-display:flex;
+padding:12px;
 
-flex-direction:column;
-
-gap:6px;
-
-padding:14px;
-
-margin-bottom:12px;
+margin-bottom:10px;
 
 border-radius:18px;
 
@@ -424,7 +422,7 @@ rgba(
 255,
 255,
 255,
-0.15
+0.12
 );
 
 }
@@ -470,5 +468,133 @@ width:8px;
 background:white;
 
 border-radius:20px;
+
+}
+
+/* RIGHT WINNER PANEL */
+
+#winnerPanel{
+
+position:absolute;
+
+right:12px;
+
+top:110px;
+
+width:250px;
+
+height:680px;
+
+overflow:auto;
+
+padding:14px;
+
+border-radius:22px;
+
+background:
+
+rgba(
+255,
+255,
+255,
+0.10
+);
+
+backdrop-filter:
+
+blur(
+12px
+);
+
+box-shadow:
+
+0 15px 30px rgba(
+0,
+0,
+0,
+0.25
+);
+
+}
+
+.winnerHeader{
+
+font-size:24px;
+
+color:white;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:16px;
+
+}
+
+.winnerCard{
+
+padding:14px;
+
+margin-bottom:12px;
+
+border-radius:18px;
+
+background:
+
+rgba(
+255,
+255,
+255,
+0.12
+);
+
+}
+
+.winnerName{
+
+font-size:22px;
+
+color:white;
+
+font-weight:bold;
+
+}
+
+.winnerState{
+
+font-size:18px;
+
+color:gold;
+
+}
+
+
+.winnerTicket{
+
+font-size:20px;
+
+color:#00ffcc;
+
+}
+
+.winnerPrize{
+
+font-size:20px;
+
+color:#00ff66;
+
+}
+
+#winnerPanel::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+#winnerPanel::-webkit-scrollbar-thumb{
+
+background:white;
+
+border-radius:30px;
 
 }

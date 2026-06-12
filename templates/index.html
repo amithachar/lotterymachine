@@ -7,9 +7,7 @@
 <meta charset="UTF-8">
 
 <title>
-
 3D Lottery Machine
-
 </title>
 
 <link
@@ -19,6 +17,27 @@ href="/static/css/style.css">
 </head>
 
 <body>
+
+<!-- TOP NEWS BAR -->
+
+<div id="historyBar">
+
+<div class="historyTitle">
+
+🏆 RECENT WINNERS
+
+</div>
+
+<div id="historyTicker">
+
+Waiting for first draw...
+
+</div>
+
+</div>
+
+
+<!-- LEFT PANEL -->
 
 <div id="livePanel">
 
@@ -34,21 +53,25 @@ href="/static/css/style.css">
 
 </div>
 
-<div id="historyBar">
 
-<div class="historyTitle">
+<!-- RIGHT PANEL -->
 
-🏆RECENT WINNERS
+<div id="winnerPanel">
 
-</div>
+<div class="winnerHeader">
 
-<div id="historyTicker">
-
-Waiting for first draw...
+🏆 LIVE WINNERS
 
 </div>
 
+<div id="winnerList">
+
 </div>
+
+</div>
+
+
+<!-- MAIN MACHINE -->
 
 <div class="container">
 
@@ -57,6 +80,7 @@ Waiting for first draw...
 🎰 LOTTERY MACHINE
 
 </h1>
+
 
 <div id="machine">
 
@@ -86,6 +110,7 @@ Waiting for first draw...
 
 </div>
 
+
 <button
 
 id="startBtn"
@@ -99,6 +124,7 @@ START
 </button>
 
 </div>
+
 
 <script
 src="/static/js/app.js">
