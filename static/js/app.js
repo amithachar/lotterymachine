@@ -171,3 +171,118 @@ history.join(
 )
 
 }
+
+const states=[
+
+"Andhra Pradesh",
+"Arunachal Pradesh",
+"Assam",
+"Bihar",
+"Goa",
+"Gujarat",
+"Haryana",
+"Karnataka",
+"Kerala",
+"Madhya Pradesh",
+
+"Maharashtra",
+"Odisha",
+"Punjab",
+"Rajasthan",
+"Sikkim",
+"Tamil Nadu",
+"Telangana",
+"Tripura",
+"Uttar Pradesh",
+"West Bengal"
+
+]
+
+function randomTicket(){
+
+return Math.floor(
+
+100000+
+
+Math.random()*900000
+
+)
+
+}
+
+function randomSold(){
+
+return Math.floor(
+
+100+
+
+Math.random()*900
+
+)
+
+}
+
+function loadSales(){
+
+const panel=
+
+document.getElementById(
+"stateList"
+)
+
+panel.innerHTML=""
+
+states.forEach(
+
+state=>{
+
+const row=
+
+document.createElement(
+"div"
+)
+
+row.className=
+"stateRow"
+
+row.innerHTML=`
+
+<div class="stateName">
+
+${state}
+
+</div>
+
+<div class="ticketBox">
+
+🎟️ ${randomTicket()}
+
+</div>
+
+<div class="soldBox">
+
+${randomSold()} sold
+
+</div>
+
+`
+
+panel.appendChild(
+row
+)
+
+}
+
+)
+
+}
+
+loadSales()
+
+setInterval(
+
+loadSales,
+
+60000
+
+)
