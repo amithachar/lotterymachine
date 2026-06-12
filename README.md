@@ -1,15 +1,63 @@
-<<<<<<< HEAD
-# Lottery Rolling Machine
 
-Run:
+# Lottery Rolling Machine Architecture
 
-python app.py
+```text
+┌──────────────────────────┐
+│        Developer         │
+│  Push code → GitHub      │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│         Jenkins          │
+│      (CI Pipeline)       │
+│                          │
+│ 1. Checkout Code         │
+│ 2. Install Dependencies  │
+│ 3. Run Unit Tests        │
+│ 4. Build Docker Image    │
+│ 5. Push Container        │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│ Google Artifact Registry │
+│                          │
+│ lottery-machine:build#   │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│       GitOps Repo        │
+│      (lotterygitops)     │
+│                          │
+│ deployment.yaml          │
+│ image tag updated        │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│      ArgoCD (GitOps)     │
+│   Watches GitOps Repo    │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│    Google Kubernetes     │
+│   Engine (GKE Cluster)   │
+│                          │
+│ Deployment               │
+│ Service                  │
+│ Pods                     │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│          Users           │
+│    Access Application    │
+└──────────────────────────┘
 
-Docker:
 
-docker build -t lottery .
 
-docker run -p 5000:5000 lottery
-=======
-# lotterymachine
->>>>>>> ee415b3b42f977067406e0a783c6589cea0560c3
+
+
