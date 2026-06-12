@@ -4,8 +4,8 @@ import random
 app = Flask(__name__)
 
 TOTAL_NUMBERS = 6
-MIN_NUMBER = 1
-MAX_NUMBER = 99
+MIN_NUMBER = 0
+MAX_NUMBER = 9
 
 
 @app.route("/")
@@ -16,28 +16,40 @@ def home():
 @app.route("/start")
 def start():
 
-    numbers = random.sample(
-        range(
-            MIN_NUMBER,
-            MAX_NUMBER + 1
-        ),
-        TOTAL_NUMBERS
-    )
+    numbers=[]
+
+    for _ in range(TOTAL_NUMBERS):
+
+        numbers.append(
+
+            random.randint(
+                MIN_NUMBER,
+                MAX_NUMBER
+            )
+
+        )
 
     return jsonify({
-        "success": True,
-        "numbers": numbers
+
+        "success":True,
+
+        "numbers":numbers
+
     })
 
 
 @app.route("/health")
 def health():
+
     return {
-        "status": "UP"
+
+        "status":"UP"
+
     }
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
+
     app.run(
         host="0.0.0.0",
         port=5000

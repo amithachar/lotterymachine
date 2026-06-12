@@ -10,19 +10,18 @@ document.getElementById(
 btn.disabled=true
 
 const balls=
+
 document.querySelectorAll(
 ".ball"
 )
 
 balls.forEach(
 
-ball=>{
+b=>
 
-ball.classList.add(
+b.classList.add(
 "roll"
 )
-
-}
 
 )
 
@@ -36,7 +35,7 @@ index
 
 )=>{
 
-const number=
+const span=
 
 ball.querySelector(
 "span"
@@ -48,7 +47,7 @@ setInterval(
 
 ()=>{
 
-number.innerHTML=
+span.innerHTML=
 
 Math.floor(
 Math.random()*10
@@ -56,7 +55,7 @@ Math.random()*10
 
 },
 
-70
+80
 
 )
 
@@ -77,6 +76,8 @@ await response.json()
 setTimeout(
 
 ()=>{
+
+let final=""
 
 balls.forEach(
 
@@ -104,9 +105,11 @@ ball.querySelector(
 
 .innerHTML=
 
-data.numbers[
-index
-]
+data.numbers[index]
+
+final+=
+
+data.numbers[index]
 
 if(
 
@@ -117,14 +120,14 @@ index===5
 btn.disabled=false
 
 updateHistory(
-data.numbers
+final
 )
 
 }
 
 },
 
-index*700
+index*500
 
 )
 
@@ -142,25 +145,20 @@ index*700
 
 function updateHistory(
 
-numbers
+result
 
 ){
 
 history.unshift(
-
-numbers.join(
-" - "
+result
 )
 
+history=
+
+history.slice(
+0,
+10
 )
-
-if(
-
-history.length>10
-
-)
-
-history.pop()
 
 document
 .getElementById(
@@ -171,7 +169,7 @@ document
 
 history.join(
 
-"&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;"
+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 
 )
 
