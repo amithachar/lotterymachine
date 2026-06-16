@@ -58,6 +58,123 @@
 └──────────────────────────┘
 
 
+# Updated
+
+                    ┌──────────────────────┐
+                    │      End Users       │
+                    │  Browser / Mobile    │
+                    └──────────┬───────────┘
+                               │
+                               │ HTTPS
+                               ▼
+                    ┌──────────────────────┐
+                    │     hulkpower.in     │
+                    │   Google Cloud DNS   │
+                    └──────────┬───────────┘
+                               │
+                               │ Resolve Domain
+                               ▼
+                    ┌──────────────────────┐
+                    │ GKE Load Balancer    │
+                    │ External IP          │
+                    └──────────┬───────────┘
+                               │
+                               │
+                    ┌──────────▼───────────┐
+                    │ Kubernetes Service   │
+                    │ Type=LoadBalancer    │
+                    │ lottery-service      │
+                    └──────────┬───────────┘
+                               │
+                               │
+                    ┌──────────▼───────────┐
+                    │ Kubernetes Deployment│
+                    │ lottery-deployment   │
+                    │ replicas: 2          │
+                    └───────┬───────┬──────┘
+                            │       │
+                 ┌──────────▼─┐ ┌──▼─────────┐
+                 │ Lottery Pod│ │ Lottery Pod│
+                 │ Flask App  │ │ Flask App  │
+                 │ Gunicorn   │ │ Gunicorn   │
+                 └────────────┘ └────────────┘
 
 
+────────────────────────────────────────────────
+
+              CI/CD + GitOps FLOW
+
+┌────────────────────┐
+│ GitHub Source Repo │
+│ (Lottery App Code) │
+└──────────┬─────────┘
+           │
+           │ webhook
+           ▼
+
+┌────────────────────┐
+│      Jenkins       │
+│ Build + Test       │
+│ Docker Build       │
+│ Push Image         │
+└──────────┬─────────┘
+           │
+           ▼
+
+┌──────────────────────────┐
+│ Google Artifact Registry │
+│ lottery/lottery-machine  │
+└──────────┬───────────────┘
+           │
+           ▼
+
+┌──────────────────────────┐
+│ GitOps Repository        │
+│ deployment.yaml          │
+│ service.yaml             │
+└──────────┬───────────────┘
+           │
+           ▼
+
+┌──────────────────────────┐
+│ ArgoCD (Inside GKE)      │
+│ Watches Git Repo         │
+└──────────┬───────────────┘
+           │
+           ▼
+
+┌──────────────────────────┐
+│ Kubernetes Cluster (GKE) │
+│ Sync Deployment          │
+└──────────────────────────┘
+
+
+Components in your project
+Layer	                      Service
+Source Control	            GitHub
+CI	                        Jenkins
+Container  Registry	        Google Artifact Registry
+GitOps	                    GitHub GitOps Repo
+CD	                        ArgoCD
+Orchestration	              GKE
+Networking	                GKE LoadBalancer
+DNS	                        Google Cloud DNS
+Runtime	                    flask + Gunicorn
+Container                 	Docker
+
+Optional production upgrades
+
+Cloud Armor
+↓
+HTTPS Load Balancer
+↓
+Managed SSL Certificate
+↓
+GKE Ingress
+↓
+Prometheus + Grafana
+↓
+Cloud Monitoring
+↓
+Cloud Logging
 
