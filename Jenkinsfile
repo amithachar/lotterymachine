@@ -55,14 +55,17 @@ pipeline {
         }
         
         stage('OWASP Dependency Check') {
-            steps {
-                dependencyCheck additionalArguments: '--scan .', odcInstallation: 'OWASP'
-            }
-        }
-        
+                    steps {
+                        dependencyCheck(
+                            odcInstallation: 'OWASP',
+                            additionalArguments: '--scan . --format XML'
+                        )
+                    }
+                }
+
         stage('Publish OWASP Report') {
             steps {
-                dependencyCheckPublisher()
+                dependencyCheckPublisher(pattern: '**/dependency-check-report.xml')
             }
         }
         
