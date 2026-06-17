@@ -101,16 +101,19 @@ pipeline {
         
         stage('SonarQube Scan') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh '''
-                        . venv/bin/activate
-                        sonar-scanner \
-                        -Dsonar.projectKey=lottery \
-                        -Dsonar.projectName=lottery \
-                        -Dsonar.sources=. \
-                        -Dsonar.python.version=3.11 \
-                        -Dsonar.exclusions=venv/**,tests/**,**pycache**/**
-                    '''
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('sonarqube') {
+                        sh """
+                            . venv/bin/activate
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=lottery \
+                            -Dsonar.projectName=lottery \
+                            -Dsonar.sources=. \
+                            -Dsonar.python.version=3.11 \
+                            -Dsonar.exclusions=venv/**,tests/**,**pycache**/**
+                        """
+                    }
                 }
             }
         }
