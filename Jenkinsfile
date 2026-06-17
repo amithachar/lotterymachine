@@ -105,10 +105,11 @@ pipeline {
                     sh '''
                         . venv/bin/activate
                         sonar-scanner \
-                          -Dsonar.projectKey=lottery \
-                          -Dsonar.projectName=lottery \
-                          -Dsonar.sources=. \
-                          -Dsonar.python.version=3.11
+                        -Dsonar.projectKey=lottery \
+                        -Dsonar.projectName=lottery \
+                        -Dsonar.sources=. \
+                        -Dsonar.python.version=3.11 \
+                        -Dsonar.exclusions=venv/**,tests/**,**pycache**/**
                     '''
                 }
             }
