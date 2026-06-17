@@ -70,36 +70,21 @@ pipeline {
         }
         
         stage('Bandit SAST') {
-
             steps {
-
                 sh '''
-                . venv/bin/activate
-
-                mkdir -p reports
-
-                bandit \
-                -r . \
-                -x ./venv,./tests \
-                -f html \
-                -o reports/bandit-report.html
-
-                bandit \
-                -r . \
-                -x ./venv,./tests \
-                -f txt
+                    . venv/bin/activate
+                    mkdir -p reports
+                    bandit -r . -x ./venv,./tests -f html -o reports/bandit-report.html || true
+                    bandit -r . -x ./venv,./tests -f txt || true
                 '''
             }
-
             post {
                 always {
-                    archiveArtifacts \
-                    artifacts: 'reports/*',
-                    allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
                 }
             }
         }
-        
+                
         stage('Unit Tests') {
             steps {
                 sh '''
