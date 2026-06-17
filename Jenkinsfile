@@ -70,11 +70,33 @@ pipeline {
         }
         
         stage('Bandit SAST') {
+
             steps {
+
                 sh '''
-                    . venv/bin/activate
-                    bandit -r . -f txt
+                . venv/bin/activate
+
+                mkdir -p reports
+
+                bandit \
+                -r . \
+                -x ./venv,./tests \
+                -f html \
+                -o reports/bandit-report.html
+
+                bandit \
+                -r . \
+                -x ./venv,./tests \
+                -f txt
                 '''
+            }
+
+            post {
+                always {
+                    archiveArtifacts \
+                    artifacts: 'reports/*',
+                    allowEmptyArchive: true
+                }
             }
         }
         
